@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * The Bank implementation.
  */
 public class Bank implements BankInterface {
-    private LinkedHashMap<Long, Account> accounts;
+    private final LinkedHashMap<Long, Account> accounts;
 
     public Bank() {
         this.accounts = new LinkedHashMap<>();
@@ -57,11 +57,11 @@ public class Bank implements BankInterface {
     }
 
     public boolean checkAuthorizedUser(Long accountNumber, Person authorizedPerson) {
-        final Optional<CommercialAccount> commercialAccount = Optional.ofNullable(getAccount(accountNumber))
+        return Optional.ofNullable(getAccount(accountNumber))
                 .filter(account -> account.getClass() == CommercialAccount.class)
-                .map(CommercialAccount.class::cast);
-
-        return commercialAccount.isPresent() && commercialAccount.get().isAuthorizedUser(authorizedPerson);
+                .map(CommercialAccount.class::cast)
+                .map(account -> account.isAuthorizedUser(authorizedPerson))
+                .orElse(false);
     }
 
     public Map<String, Double> getAverageBalanceReport() {
