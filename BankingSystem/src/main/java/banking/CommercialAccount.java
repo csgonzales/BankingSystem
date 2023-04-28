@@ -1,14 +1,14 @@
 package banking;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Account implementation for commercial (business) customers.
  * The account's holder is a {@link Company}.
  */
 public class CommercialAccount extends Account {
-    private List<Person> authorizedUsers = new ArrayList<>();
+    private Set<Person> authorizedUsers = new HashSet<>();
 
     public CommercialAccount(Company company, Long accountNumber, int pin, double startingDeposit) {
         super(company, accountNumber, pin, startingDeposit);
