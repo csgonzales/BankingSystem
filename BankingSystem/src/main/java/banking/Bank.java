@@ -18,7 +18,7 @@ public class Bank implements BankInterface {
     }
 
     public Long openCommercialAccount(Company company, int pin, double startingDeposit) {
-        long accountNumber = accounts.size() + 1;
+        final long accountNumber = accounts.size() + 1;
         this.accounts.put(accountNumber, new CommercialAccount(company, accountNumber, pin, startingDeposit));
         return accountNumber;
     }
