@@ -10,35 +10,37 @@ public abstract class Account implements AccountInterface {
     private double balance;
 
     protected Account(AccountHolder accountHolder, Long accountNumber, int pin, double startingDeposit) {
-        // TODO: complete the constructor
+        this.accountHolder = accountHolder;
+        this.accountNumber = accountNumber;
+        this.pin = pin;
+        creditAccount(startingDeposit);
     }
 
     public AccountHolder getAccountHolder() {
-        // TODO: complete the method
-        return null;
+        return accountHolder;
     }
 
     public boolean validatePin(int attemptedPin) {
-        // TODO: complete the method
-        return false;
+        return pin == attemptedPin;
     }
 
     public double getBalance() {
-        // TODO: complete the method
-        return -1;
+        return balance;
     }
 
     public Long getAccountNumber() {
-        // TODO: complete the method
-        return -1L;
+        return accountNumber;
     }
 
     public void creditAccount(double amount) {
-        // TODO: complete the method
+        this.balance += amount;
     }
 
     public boolean debitAccount(double amount) {
-        // TODO: complete the method
+        if(this.balance >= amount) {
+            this.balance -= amount;
+            return true;
+        }
         return false;
     }
 }

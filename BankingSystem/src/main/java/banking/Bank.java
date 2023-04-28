@@ -1,8 +1,6 @@
 package banking;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The Bank implementation.
@@ -11,41 +9,43 @@ public class Bank implements BankInterface {
     private LinkedHashMap<Long, Account> accounts;
 
     public Bank() {
-        // TODO: complete the constructor
+        this.accounts = new LinkedHashMap<>();
     }
 
     private Account getAccount(Long accountNumber) {
-        // TODO: complete the method
-        return null;
+        return this.accounts.get(accountNumber);
     }
 
     public Long openCommercialAccount(Company company, int pin, double startingDeposit) {
-        // TODO: complete the method
-        return -1L;
+        long accountNumber = accounts.size() + 1;
+        this.accounts.put(accountNumber, new CommercialAccount(company, accountNumber, pin, startingDeposit));
+        return accountNumber;
     }
 
     public Long openConsumerAccount(Person person, int pin, double startingDeposit) {
-        // TODO: complete the method
-        return -1L;
+        long accountNumber = accounts.size() + 1;
+        this.accounts.put(accountNumber, new ConsumerAccount(person, accountNumber, pin, startingDeposit));
+        return accountNumber;
     }
 
     public double getBalance(Long accountNumber) {
-        // TODO: complete the method
-        return -1;
+        Account account = getAccount(accountNumber);
+        return Objects.nonNull(account) ? account.getBalance() : 0;
     }
 
     public void credit(Long accountNumber, double amount) {
-        // TODO: complete the method
+        Optional.ofNullable(getAccount(accountNumber))
+                .ifPresent(account -> account.creditAccount(amount));
     }
 
     public boolean debit(Long accountNumber, double amount) {
-        // TODO: complete the method
-        return false;
+        Account account = getAccount(accountNumber);
+        return Objects.nonNull(account) && account.debitAccount(amount);
     }
 
     public boolean authenticateUser(Long accountNumber, int pin) {
-        // TODO: complete the method
-        return false;
+        Account account = getAccount(accountNumber);
+        return Objects.nonNull(account) && account.validatePin(pin);
     }
     
     public void addAuthorizedUser(Long accountNumber, Person authorizedPerson) {
